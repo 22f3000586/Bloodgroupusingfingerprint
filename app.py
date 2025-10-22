@@ -16,7 +16,6 @@ import requests
 # ================================================================
 st.set_page_config(
     page_title="BloodSense AI - Fingerprint Blood Group Detection",
-    page_icon="🩸",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -216,7 +215,7 @@ col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.markdown("""
     <div class='header-container'>
-        <h1 style='text-align: center; color: white; margin-bottom: 0;'>🩸 BloodSense AI</h1>
+        <h1 style='text-align: center; color: white; margin-bottom: 0;'> BloodSense AI</h1>
         <h3 style='text-align: center; color: rgba(255, 255, 255, 0.8); font-weight: 300;'>
         Advanced Blood Group Detection from Fingerprint Analysis</h3>
     </div>
@@ -275,10 +274,10 @@ with col2:
     
     st.markdown("""
     <div style='color: white; font-size: 0.9rem;'>
-    <p>🔬 <b>How it works:</b> Our advanced AI analyzes unique patterns in your fingerprint 
-    to predict your blood group with high accuracy using deep learning technology.</p>
+    <p><b>How it works:</b> Our AI analyzes unique patterns in your fingerprint 
+    to predict your blood group with accuracy using deep learning technology.</p>
     
-    <p>🩺 <b>Medical Importance:</b> Knowing your blood group is crucial for:</p>
+    <p><b>Medical Importance:</b> Knowing your blood group is crucial for:</p>
     <ul>
         <li>Emergency transfusions</li>
         <li>Organ transplants</li>
@@ -388,8 +387,6 @@ with col2:
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: rgba(255, 255, 255, 0.7); font-size: 0.8rem;'>
-    <p>🩸 <b>BloodSense AI</b> - Advanced Fingerprint Blood Group Detection System</p>
-    <p>⚠️ For medical purposes, please verify results with laboratory tests</p>
-    <p>🔒 Your data is secure and processed anonymously</p>
+    <p> <b>BloodSense AI</b> - Advanced Fingerprint Blood Group Detection System</p>
 </div>
 """, unsafe_allow_html=True)
