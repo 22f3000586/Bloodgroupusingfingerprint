@@ -47,14 +47,12 @@ The repository includes:
    - Evaluate performance
    - Export/save the final model (if built)
 
-
 ## Contributing
 Contributions are welcome! You can:
 - Add new features (for example, GUI or web frontend)
 - Improve model performance (try deep learning or image-based fingerprint processing)
 - Add more documentation or tests
 Submit an issue or pull request if interested.
-
 
 ## Contact
 For any questions, reach out via your GitHub profile or email.
