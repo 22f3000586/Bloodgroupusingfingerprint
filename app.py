@@ -7,19 +7,36 @@ import io
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from streamlit_lottie import st_lottie
+import json
+import requests
 
 # ================================================================
 # 1️⃣ PAGE CONFIGURATION
 # ================================================================
 st.set_page_config(
     page_title="BloodSense AI - Fingerprint Blood Group Detection",
+    page_icon="🩸",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
 # ================================================================
-# 2️⃣ CUSTOM STYLES
+# 2️⃣ CUSTOM STYLES & ANIMATIONS
 # ================================================================
+def load_lottie_url(url):
+    try:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
+    except:
+        return None
+
+# Lottie animations
+fingerprint_anim = load_lottie_url("https://assets1.lottiefiles.com/packages/lf20_sk5h1kfn.json")
+blood_anim = load_lottie_url("https://assets1.lottiefiles.com/packages/lf20_ygiuluqn.json")
+
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -45,25 +62,20 @@ st.markdown("""
         margin: 1rem 0;
         border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        text-align: center;
     }
     
-    .input-section {
+    .input-card {
         background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
         border-radius: 15px;
-        padding: 2rem;
+        padding: 1.5rem;
         margin: 1rem 0;
         border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease;
     }
     
-    .info-section {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 2rem;
-        margin: 1rem 0;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+    .input-card:hover {
+        transform: translateY(-5px);
     }
     
     .result-card {
@@ -127,21 +139,15 @@ st.markdown("""
         border-radius: 10px;
         transition: width 0.5s ease;
     }
-            
-    /* Remove unwanted top space before sections */
-    .block-container {
-        padding-top: 1rem !important;
+    
+    .user-details-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
-
-    h3, h4 {
-        margin-top: 0.2rem !important;
-    }
-
-    .input-section h3:first-child,
-    .info-section h3:first-child {
-        margin-top: 0 !important;
-    }
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -206,36 +212,35 @@ def predict_image(image_bytes):
 # ================================================================
 
 # Header Section
-st.markdown("""
-<div class='header-container'>
-    <h1 style='color: white; margin-bottom: 0.5rem;'> BloodSense AI</h1>
-    <h3 style='color: rgba(255, 255, 255, 0.8); font-weight: 300; margin-top: 0;'>
-    Advanced Blood Group Detection from Fingerprint Analysis</h3>
-</div>
-""", unsafe_allow_html=True)
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.markdown("""
+    <div class='header-container'>
+        <h1 style='text-align: center; color: white; margin-bottom: 0;'>🩸 BloodSense AI</h1>
+        <h3 style='text-align: center; color: rgba(255, 255, 255, 0.8); font-weight: 300;'>
+        Advanced Blood Group Detection from Fingerprint Analysis</h3>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Main Content
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    # Personal Information Section
-    st.markdown("<div class='input-section'>", unsafe_allow_html=True)
-    st.markdown("### 👤 Personal Information")
+    st.markdown("<div class='input-card'>", unsafe_allow_html=True)
     
+    # User Information
+    st.markdown("### 👤 Personal Information")
     name = st.text_input("**Full Name**", placeholder="Enter your full name")
     
     col_a, col_b = st.columns(2)
     with col_a:
         mobile = st.text_input("**Mobile Number**", placeholder="+1 234 567 8900")
+        gender = st.selectbox("**Gender**", ["Select", "Male", "Female", "Other"])
     with col_b:
         age = st.number_input("**Age**", min_value=1, max_value=120, step=1, value=25)
+        nationality = st.text_input("**Nationality**", placeholder="Your nationality")
     
-    gender = st.selectbox("**Gender**", ["Select", "Male", "Female", "Other"])
-    nationality = st.text_input("**Nationality**", placeholder="Your nationality")
-    st.markdown("</div>", unsafe_allow_html=True)
-    
-    # Fingerprint Upload Section
-    st.markdown("<div class='input-section'>", unsafe_allow_html=True)
+    # Fingerprint Upload
     st.markdown("### 📸 Fingerprint Upload")
     uploaded_file = st.file_uploader(
         "**Upload your fingerprint image**",
@@ -248,21 +253,28 @@ with col1:
             image_bytes = uploaded_file.read()
             image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
             
-            # Display image
+            # Display image with better styling
             st.markdown("**📁 Uploaded Fingerprint Preview:**")
-            st.image(image, caption="🖐 Your Fingerprint", width=250, use_container_width=True)
+            col_img1, col_img2, col_img3 = st.columns([1, 2, 1])
+            with col_img2:
+                st.image(image, caption="🖐 Your Fingerprint", width=250, use_container_width=True)
         except UnidentifiedImageError:
             st.error("❌ Invalid or corrupted image. Please upload a valid fingerprint image.")
             st.stop()
+    
     st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
+    st.markdown("<div class='input-card'>", unsafe_allow_html=True)
+    
     # Information Section
-    st.markdown("<div class='info-section'>", unsafe_allow_html=True)
     st.markdown("### ℹ️ About BloodSense AI")
     
+    if fingerprint_anim:
+        st_lottie(fingerprint_anim, height=200, key="fingerprint")
+    
     st.markdown("""
-    <div style='color: white; font-size: 0.95rem; line-height: 1.6;'>
+    <div style='color: white; font-size: 0.9rem;'>
     <p>🔬 <b>How it works:</b> Our advanced AI analyzes unique patterns in your fingerprint 
     to predict your blood group with high accuracy using deep learning technology.</p>
     
@@ -274,12 +286,7 @@ with col2:
         <li>Genetic research</li>
     </ul>
     
-    <p>⚡ <b>Process:</b></p>
-    <ol>
-        <li>Upload your fingerprint image</li>
-        <li>AI analyzes unique patterns</li>
-        <li>Get instant blood group results</li>
-    </ol>
+    <p>⚡ <b>Process:</b> Upload your fingerprint → AI Analysis → Instant Results</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -353,7 +360,7 @@ with col2:
             st.markdown("</div>", unsafe_allow_html=True)
             
             # User Details
-            st.markdown("<div class='input-section'>", unsafe_allow_html=True)
+            st.markdown("<div class='user-details-card'>", unsafe_allow_html=True)
             st.markdown("### 👤 Analysis Report Summary")
             
             user_data = {
@@ -374,13 +381,15 @@ with col2:
                 use_container_width=True
             )
             st.markdown("</div>", unsafe_allow_html=True)
-    
+
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: rgba(255, 255, 255, 0.7); font-size: 0.8rem;'>
-    <p><b>BloodSense AI</b> - Advanced Fingerprint Blood Group Detection System</p>
+    <p>🩸 <b>BloodSense AI</b> - Advanced Fingerprint Blood Group Detection System</p>
+    <p>⚠️ For medical purposes, please verify results with laboratory tests</p>
+    <p>🔒 Your data is secure and processed anonymously</p>
 </div>
 """, unsafe_allow_html=True)
