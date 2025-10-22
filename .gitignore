@@ -1,0 +1,30 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.db
+*.sqlite3
+*.log
+
+# --- Virtual Environments ---
+venv/
+.env/
+.venv/
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Model Files ---
+*.pth
+*.pt
+
+# --- Data Files ---
+*.csv
+*.xlsx
+*.h5
+*.pkl
