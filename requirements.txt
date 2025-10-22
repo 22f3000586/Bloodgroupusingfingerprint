@@ -1,15 +1,22 @@
-# Core
+# ================================
+# Blood Group Detection App - Dependencies
+# Compatible with Python 3.13
+# ================================
+
+# Core framework
 streamlit==1.50.0
 
-# PyTorch
-torch==2.5.1
+# PyTorch and vision models
+torch==2.6.0
 torchvision==0.21.0
-torchaudio==2.5.1  # optional, only if needed
+torchaudio==2.6.0   # only if you use audio, otherwise optional
 
-# Data and images
+# Image processing
+pillow==11.3.0
+
+# Data handling
 pandas==2.3.3
 numpy==2.3.4
-pillow==11.3.0
 
 # Utilities
 requests==2.32.5
