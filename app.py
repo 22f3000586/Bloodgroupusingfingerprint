@@ -13,7 +13,6 @@ import plotly.graph_objects as go
 # ================================================================
 st.set_page_config(
     page_title="BloodSense AI - Fingerprint Blood Group Detection",
-    page_icon="🩸",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -209,7 +208,7 @@ def predict_image(image_bytes):
 # Header Section
 st.markdown("""
 <div class='header-container'>
-    <h1 style='color: white; margin-bottom: 0.5rem;'>🩸 BloodSense AI</h1>
+    <h1 style='color: white; margin-bottom: 0.5rem;'> BloodSense AI</h1>
     <h3 style='color: rgba(255, 255, 255, 0.8); font-weight: 300; margin-top: 0;'>
     Advanced Blood Group Detection from Fingerprint Analysis</h3>
 </div>
