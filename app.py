@@ -128,18 +128,18 @@ st.markdown("""
         transition: width 0.5s ease;
     }
             
-        /* Remove unwanted top space before sections */
+    /* Remove unwanted top space before sections */
     .block-container {
-        padding-top: 1rem !important;  /* Reduce large top padding */
+        padding-top: 1rem !important;
     }
 
     h3, h4 {
-        margin-top: 0.2rem !important; /* Minimize heading gaps */
+        margin-top: 0.2rem !important;
     }
 
     .input-section h3:first-child,
     .info-section h3:first-child {
-        margin-top: 0 !important; /* No empty space before first heading */
+        margin-top: 0 !important;
     }
 
 </style>
@@ -218,9 +218,8 @@ st.markdown("""
 col1, col2 = st.columns([1, 1])
 
 with col1:
+    # Personal Information Section
     st.markdown("<div class='input-section'>", unsafe_allow_html=True)
-    
-    # User Information
     st.markdown("### 👤 Personal Information")
     
     name = st.text_input("**Full Name**", placeholder="Enter your full name")
@@ -233,8 +232,10 @@ with col1:
     
     gender = st.selectbox("**Gender**", ["Select", "Male", "Female", "Other"])
     nationality = st.text_input("**Nationality**", placeholder="Your nationality")
+    st.markdown("</div>", unsafe_allow_html=True)
     
-    # Fingerprint Upload
+    # Fingerprint Upload Section
+    st.markdown("<div class='input-section'>", unsafe_allow_html=True)
     st.markdown("### 📸 Fingerprint Upload")
     uploaded_file = st.file_uploader(
         "**Upload your fingerprint image**",
@@ -253,13 +254,11 @@ with col1:
         except UnidentifiedImageError:
             st.error("❌ Invalid or corrupted image. Please upload a valid fingerprint image.")
             st.stop()
-    
     st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
-    st.markdown("<div class='info-section'>", unsafe_allow_html=True)
-    
     # Information Section
+    st.markdown("<div class='info-section'>", unsafe_allow_html=True)
     st.markdown("### ℹ️ About BloodSense AI")
     
     st.markdown("""
@@ -281,7 +280,6 @@ with col2:
         <li>AI analyzes unique patterns</li>
         <li>Get instant blood group results</li>
     </ol>
-    
     </div>
     """, unsafe_allow_html=True)
     
@@ -376,7 +374,7 @@ with col2:
                 use_container_width=True
             )
             st.markdown("</div>", unsafe_allow_html=True)
-
+    
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Footer
